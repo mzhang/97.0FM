@@ -23,15 +23,14 @@ async def search(ctx, *, query):
     
     
     out = 'http://www.youtube.com/watch_videos?video_ids='
+    recommendedSongs = ''
     for entry in playlist:
         for key in entry:
             if key == 'videoId':
                 out+=(entry['videoId'] + ',')
-                newfield = '[%s](%s)' % (entry['title'],"https://www.youtube.com/watch?v="+entry['videoId'])
-                embed.add_field(name="\u200B",value=newfield, inline=False)
+                recommendedSongs += '[%s](%s)\n' % (entry['title'],"https://www.youtube.com/watch?v="+entry['videoId']) 
     out = '```' + out[:-1] + '```'
-
-    embed.add_field(name="Triple-click and copy the following link! ", value=out)
+    embed.add_field(name="Triple-click and copy the following link!", value=out)
     await ctx.send(embed=embed)
 
 client.run('NzczMzM5MzY0NDQ0MjA5MTc0.X6HyaA.whMtIsCYhj-fYDmCeDpHHKewzBU')
