@@ -17,7 +17,13 @@ async def beep(ctx):
 async def search(ctx, *, query):
     search = ytmusic.search(query, 'songs')
     playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
-    await ctx.send(playlist[0])
+    out = 'http://www.youtube.com/watch_videos?video_ids='
+    for entry in playlist:
+        for key in entry:
+            if key == 'videoId':
+                out+=(entry['videoId'] + ',')
+    out = out[:-1]
+    await ctx.send(out)
 
     
 
