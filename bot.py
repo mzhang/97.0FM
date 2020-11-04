@@ -15,10 +15,9 @@ async def beep(ctx):
 
 @client.command()
 async def search(ctx, *, query):
-    search = ytmusic.search(query, 'songs')[0]['videoId']
-    
-
-    await ctx.send(f'https://www.youtube.com/watch?v={search}')
+    search = ytmusic.search(query, 'songs')
+    playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
+    await ctx.send(playlist[0])
 
     
 
