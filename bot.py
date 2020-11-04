@@ -27,7 +27,8 @@ async def search(ctx, *, query):
         for key in entry:
             if key == 'videoId':
                 out+=(entry['videoId'] + ',')
-                embed.add_field(name=entry['title'],value="https://www.youtube.com/watch?v="+entry['videoId'])
+                newfield = '[%s](%s)' % (entry['title'],"https://www.youtube.com/watch?v="+entry['videoId'])
+                embed.add_field(name="\u200B",value=newfield, inline=False)
     out = '```' + out[:-1] + '```'
 
     embed.add_field(name="Triple-click and copy the following link! ", value=out)
