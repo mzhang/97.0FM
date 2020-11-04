@@ -1,9 +1,14 @@
+import os
+from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from ytmusicapi import YTMusic
 
 ytmusic = YTMusic()
 client = commands.Bot(command_prefix = ".")
+
+load_dotenv()
+token = os.getenv('DISCORD_TOKEN')
 
 @client.event
 async def on_ready():
@@ -21,7 +26,6 @@ async def search(ctx, *, query):
     embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
     embed.set_thumbnail(url=search[0]['thumbnails'][2]['url'])
     
-    
     out = 'http://www.youtube.com/watch_videos?video_ids='
     recommendedSongs = ''
     for entry in playlist:
@@ -33,5 +37,5 @@ async def search(ctx, *, query):
     embed.add_field(name="Triple-click and copy the following link!", value=out)
     await ctx.send(embed=embed)
 
-client.run('NzczMzM5MzY0NDQ0MjA5MTc0.X6HyaA.whMtIsCYhj-fYDmCeDpHHKewzBU')
+client.run(token)
 
