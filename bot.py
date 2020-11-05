@@ -5,7 +5,7 @@ from discord.ext import commands
 from ytmusicapi import YTMusic
  
 ytmusic = YTMusic()
-client = commands.Bot(command_prefix = ".")
+client = commands.Bot(command_prefix = ".", help_command=None)
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -18,6 +18,10 @@ async def on_ready():
 @client.command()
 async def beep(ctx):
     await ctx.send(f'boop {client.latency * 1000}')
+
+@client.command()
+async def help(ctx):
+    await ctx.send("Give me some inspiration with `.s [song title]`!")
 
 @client.command(aliases=['s', 'S'])
 async def search(ctx, *, query):
