@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from ytmusicapi import YTMusic
-
+ 
 ytmusic = YTMusic()
 client = commands.Bot(command_prefix = ".")
 
@@ -13,6 +13,7 @@ token = os.getenv('DISCORD_TOKEN')
 @client.event
 async def on_ready():
     print('aye aye captain')
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name='the same 3 songs over and over'))
 
 @client.command()
 async def beep(ctx):
@@ -38,4 +39,3 @@ async def search(ctx, *, query):
     await ctx.send(embed=embed)
 
 client.run(token)
-
