@@ -23,11 +23,15 @@ async def beep(ctx):
 async def help(ctx):
     await ctx.send("Give me some inspiration with `.s [song title]`!")
 
+
+
+
 @client.command(aliases=['s'])
 async def shortSearch(ctx, *, query):
     search = ytmusic.search(query, 'songs')
+    print("string"+str(search))
     playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
-    
+    print(playlist)
     embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
     embed.set_thumbnail(url=search[0]['thumbnails'][2]['url'])
     

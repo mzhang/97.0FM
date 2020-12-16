@@ -35,7 +35,6 @@ multidict==4.7.6
 nbconvert==5.6.1
 nbformat==5.0.7
 nodeenv==1.4.0
-notebook==6.1.1
 numpy==1.19.0
 packaging==20.4
 pandas==1.0.5
@@ -69,4 +68,4 @@ virtualenv==20.0.25
 wcwidth==0.2.4
 webencodings==0.5.1
 yarl==1.5.1
-ytmusicapi==0.10.1
+ytmusicapi==0.12.0
