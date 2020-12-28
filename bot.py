@@ -26,42 +26,47 @@ async def help(ctx):
 
 @client.command(aliases=['s'])
 async def shortSearch(ctx, *, query):
-    search = ytmusic.search(query, 'songs')
-    playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
-    embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
-    embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
+    try:
+        search = ytmusic.search(query, 'songs')
+    
+        playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
+        embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
+        embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
 
-    out = 'http://www.youtube.com/watch_videos?video_ids='
-    for entry in playlist['tracks']:
-        for key in entry:
-            if key == 'videoId':
-                out+=(entry['videoId'] + ',')
-    out = '```' + out[:-1] + '```'
-    embed.add_field(name="Triple-click and copy the following link!", value=out)
+        out = 'http://www.youtube.com/watch_videos?video_ids='
+        for entry in playlist['tracks']:
+            for key in entry:
+                if key == 'videoId':
+                    out+=(entry['videoId'] + ',')
+        out = '```' + out[:-1] + '```'
+        embed.add_field(name="Triple-click and copy the following link!", value=out)
+        await ctx.send(embed=embed)
 
-    await ctx.send(embed=embed)
-
+    except:
+        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Try searching for a song title instead?')
 @client.command(aliases=['S'])
 async def search(ctx, *, query):
-    search = ytmusic.search(query, 'songs')
-    playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
+    try:
+        search = ytmusic.search(query, 'songs')
+        playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
 
-    embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
-    embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
+        embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
+        embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
 
-    out = 'http://www.youtube.com/watch_videos?video_ids='
-    index = 0
+        out = 'http://www.youtube.com/watch_videos?video_ids='
+        index = 0
 
-    for entry in playlist['tracks']:
-        for key in entry:
-            if key == 'videoId':
-                out+=(entry['videoId'] + ',')
-                index += 1
-                if index <= 24:
-                    embed.add_field(name=entry['title'], value=f"[{entry['byline']} - {entry['length']}](https://www.youtube.com/watch?v={entry['videoId']})",inline=True)
-    out = '```' + out[:-1] + '```'
-    embed.add_field(name="Triple-click and copy the following link!", value=out, inline=False)
+        for entry in playlist['tracks']:
+            for key in entry:
+                if key == 'videoId':
+                    out+=(entry['videoId'] + ',')
+                    index += 1
+                    if index <= 24:
+                        embed.add_field(name=entry['title'], value=f"[{entry['byline']} - {entry['length']}](https://www.youtube.com/watch?v={entry['videoId']})",inline=True)
+        out = '```' + out[:-1] + '```'
+        embed.add_field(name="Triple-click and copy the following link!", value=out, inline=False)
 
-    await ctx.send(embed=embed)
-
+        await ctx.send(embed=embed)
+    except:
+        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Try searching for a song title instead?')
 client.run(token)
