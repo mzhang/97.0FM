@@ -11,6 +11,18 @@ client = commands.Bot(command_prefix = ".", help_command=None)
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 
+splashQuotes = {"These are the songs that our Google overlords thinks are best for you!",
+                "You have interesting taste!",
+                "You might like these! I don't know. I'm just a robot.",
+                "Weird album art, but great music!",
+                "Don't blame me for your taste in music. I'm just a robot.",
+                "99% Rickroll-free guaranteed. ",
+                "If I had ears, this is what I'd listen to.",
+                "Do not worry. Judging you is not yet an implemented feature.",
+                "Groovy. Or something. I am not yet capable of measuring groovitude.",
+                "I'm doing my best."
+                }
+
 @client.event
 async def on_ready():
     print('aye aye captain')
@@ -30,7 +42,7 @@ async def shortSearch(ctx, *, query):
         search = ytmusic.search(query, 'songs')
     
         playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
-        embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
+        embed=discord.Embed(title=f"Here's a playlist with songs similar to {search[0]['title']} by {search[0]['artists'][0]['name']}:", description=random.choice(splashQuotes), color=0xae00ff)
         embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
 
         out = 'http://www.youtube.com/watch_videos?video_ids='
@@ -43,14 +55,14 @@ async def shortSearch(ctx, *, query):
         await ctx.send(embed=embed)
 
     except:
-        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Try searching for a song title instead?')
+        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Maybe try rephrasing the query?')
 @client.command(aliases=['S'])
 async def search(ctx, *, query):
     try:
         search = ytmusic.search(query, 'songs')
         playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
 
-        embed=discord.Embed(title="Here's a playlist based on your last song:", description="These are the songs that our Google overlords thinks is best for you! ", color=0xae00ff)
+        embed=discord.Embed(title="Here's a playlist based on your last song:", description=random.choice(splashQuotes), color=0xae00ff)
         embed.set_thumbnail(url=search[0]['thumbnails'][0]['url'])
 
         out = 'http://www.youtube.com/watch_videos?video_ids='
@@ -68,5 +80,5 @@ async def search(ctx, *, query):
 
         await ctx.send(embed=embed)
     except:
-        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Try searching for a song title instead?')
+        await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Maybe try rephrasing the query?')
 client.run(token)
