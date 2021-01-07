@@ -16,7 +16,7 @@ splashQuotes = ["These are the songs that our Google overlords thinks are best f
                 "You might like these! I don't know. I'm just a robot.",
                 "Weird album art, but great music!",
                 "Don't blame me for your taste in music. I'm just a robot.",
-                "99% Rickroll-free guaranteed. ",
+                "I operate on a 99% Rickroll-free guarantee.",
                 "If I had ears, this is what I'd listen to.",
                 "Do not worry. Judging you is not yet an implemented feature.",
                 "Groovy. Or something. I am not yet capable of measuring groovitude.",
@@ -34,10 +34,14 @@ async def beep(ctx):
 
 @client.command()
 async def help(ctx):
-    await ctx.send("Give me some inspiration with `.s [song title]`!")
+    embed=discord.Embed(title="Give me a song and I'll give you a playlist.")
+    embed.add_field(name="Feeling lucky? ", value="Give me some inspiration with `.search [song title]`. Or just `.s [title]`", inline=False)
+    embed.add_field(name="Don't trust me?", value="Try `.fullSearch [song title]`. `.S [title]` or `.fs [title]` also work.", inline=False)
+    embed.set_footer(text="Beep boop beep boop. Stop listening on loop.")
+    await ctx.send(embed=embed)
 
 @client.command(aliases=['s'])
-async def shortSearch(ctx, *, query):
+async def search(ctx, *, query):
     try:
         search = ytmusic.search(query, 'songs')
     
@@ -57,8 +61,8 @@ async def shortSearch(ctx, *, query):
     except Exception as e:
         print(e)
         await ctx.send('A search for'+ """ `"""+query+"""` """ + 'yielded no results! Maybe try rephrasing the query?')
-@client.command(aliases=['S'])
-async def search(ctx, *, query):
+@client.command(aliases=['S','fs'])
+async def fullSearch(ctx, *, query):
     try:
         search = ytmusic.search(query, 'songs')
         playlist = ytmusic.get_watch_playlist(search[0]['videoId'])
