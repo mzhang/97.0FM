@@ -120,7 +120,7 @@ async def play(ctx, *, query):
     voice = get(client.voice_clients, guild=ctx.guild)
 
     voice = await join(ctx, voice)
-    await ctx.send(f'Now live!')
+    await ctx.send(f'Now live! {random.choice(splashQuotes)}')
 
     voice.play(FFmpegPCMAudio(source, **FFMPEG_OPTS), after=lambda e: print('done', e))
     voice.is_playing()
