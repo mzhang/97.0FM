@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from ytmusicapi import YTMusic
-from pprint import pprint
+
 import random
 ytmusic = YTMusic()
 client = commands.Bot(command_prefix = ".", help_command=None)
@@ -90,6 +90,8 @@ async def fullSearch(ctx, *, query):
 
 from youtube_dl import YoutubeDL
 from requests import get
+
+import nacl
 
 #Get videos from links or from youtube search
 def searchYT(query):
