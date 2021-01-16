@@ -92,7 +92,7 @@ from youtube_dl import YoutubeDL
 from requests import get
 
 #Get videos from links or from youtube search
-def search(query):
+def searchYT(query):
     with YoutubeDL({'format': 'bestaudio', 'noplaylist':'True'}) as ydl:
         try: requests.get(query)
         except: info = ydl.extract_info(f"ytsearch:{query}", download=False)['entries'][0]
@@ -121,7 +121,7 @@ async def leave(ctx):
 async def play(ctx, *, query):
     FFMPEG_OPTS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
-    video, source = search(query)
+    video, source = searchYT(query)
     voice = get(client.voice_clients, guild=ctx.guild)
 
     voice = await join(ctx, voice)
